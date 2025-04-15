@@ -17,5 +17,6 @@ namespace Engine
 		const char* m_Title;
 
 	private:
+
 	};
 }

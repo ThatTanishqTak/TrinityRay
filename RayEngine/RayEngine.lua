@@ -2,7 +2,7 @@ project "RayEngine"
    kind "StaticLib"
    language "C++"
    cppdialect "C++20"
-   targetdir "Binaries/%{cfg.buildcfg}"
+   targetdir "bin/%{cfg.buildcfg}"
    staticruntime "off"
 
    files { "src/**.h", "src/**.cpp" }
@@ -11,22 +11,27 @@ project "RayEngine"
    {
       "src",
       "vendor/raylib/include",
-      "vendor/raygui"
+      "vendor/raygui/src"
+   }
+
+   defines
+   { 
+      "RAYGUI_IMPLEMENTATION",
+      "_CRT_SECURE_NO_WARNINGS"
    }
 
    links
    {
-      "vendor/raylib/lib/raylib.lib",
-      "winmm.lib",
-      "opengl32.lib"
+      "vendor/raylib/lib/raylib.lib"
    }
 
-   targetdir ("../Binaries/" .. OutputDir .. "/%{prj.name}")
-   objdir ("../Binaries/Intermediates/" .. OutputDir .. "/%{prj.name}")
+   targetdir ("../bin/" .. OutputDir .. "/%{prj.name}")
+   objdir ("../bin-int/" .. OutputDir .. "/%{prj.name}")
 
    filter "system:windows"
        systemversion "latest"
        defines { }
+       --links { }
 
    filter "configurations:Debug"
        defines { "DEBUG" }

@@ -2,7 +2,7 @@ project "RayForge"
    kind "ConsoleApp"
    language "C++"
    cppdialect "C++20"
-   targetdir "Binaries/%{cfg.buildcfg}"
+   targetdir "bin/%{cfg.buildcfg}"
    staticruntime "off"
 
    files { "src/**.h", "src/**.cpp" }
@@ -12,16 +12,19 @@ project "RayForge"
       "src",
 	  "../RayEngine/src",
       "../RayEngine/vendor/raylib/include",
-      "../RayEngine/vendor/raygui"
+      "../RayEngine/vendor/raygui/src"
    }
 
    links
-   {
-      "RayEngine"
+   { 
+      "RayEngine",
+      "winmm.lib"
    }
 
-   targetdir ("../Binaries/" .. OutputDir .. "/%{prj.name}")
-   objdir ("../Binaries/Intermediates/" .. OutputDir .. "/%{prj.name}")
+   linkoptions { "/NODEFAULTLIB:MSVCRT" }
+
+   targetdir ("../bin/" .. OutputDir .. "/%{prj.name}")
+   objdir ("../bin-int/" .. OutputDir .. "/%{prj.name}")
 
    filter "system:windows"
        systemversion "latest"
